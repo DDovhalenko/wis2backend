@@ -43,6 +43,8 @@ gem 'tzinfo-data', '~> 1.2019', '>= 1.2019.2'
 gem "bootsnap", require: false
 
 gem "devise"
+gem "bcrypt"
+gem "rack-cors", :require => 'rack/cors'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

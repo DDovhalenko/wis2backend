@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  devise_for :users
-  root 'home#homepage'
-  get 'homepage', to: 'home#homepage'
-  get 'mainpage', to: 'main#mainpage'
+  devise_for :users, controllers: { registrations: 'registrations', sessions: 'sessions' }
+ 
 end
