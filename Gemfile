@@ -45,6 +45,8 @@ gem "bootsnap", require: false
 gem "devise"
 gem "bcrypt"
 gem "rack-cors", :require => 'rack/cors'
+gem 'devise-jwt'
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Use Sass to process CSS
 # gem "sassc-rails"
