@@ -1,7 +1,0 @@
-Main page
-<% if current_user %>
-    <%= current_user.email %>
-    <%= current_user.role %>
-<% end %>
-<%= button_to 'Edit account', edit_user_registration_path, method: :get %>
-<%= button_to 'Log out', destroy_user_session_path, method: :delete %>
