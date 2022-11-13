@@ -8,4 +8,5 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :student
   end
+  attr_accessor :current_password
 end

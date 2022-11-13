@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'private/test'
+  get '/member-data', to: 'members#show'
+  devise_scope :user do
+    put 'update', to: 'registrations#update'
+    end
   devise_for :users, 
     path: '', 
     path_names: {
@@ -11,5 +14,4 @@ Rails.application.routes.draw do
       sessions: 'sessions',
       registrations: 'registrations'
     }
- 
 end
