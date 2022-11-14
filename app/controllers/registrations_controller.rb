@@ -21,8 +21,25 @@ class RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    resource_updated = update_resource(resource, account_update_params)
+    resource_updated =  resource.update_without_password(account_update_params)
+    
     render json: resource
+  end
+
+  def update_password
+    @user = current_user
+    if @user.update(user_params)
+      bypass_sign_in(@user)
+      render json: @user
+    else
+      render json: "edit"
+    end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:password)
   end
   
 end

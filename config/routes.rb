@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get '/member-data', to: 'members#show'
   devise_scope :user do
     put 'update', to: 'registrations#update'
+    put 'passupdate', to: 'registrations#update_password'
     end
   devise_for :users, 
     path: '', 
