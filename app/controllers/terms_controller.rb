@@ -10,7 +10,7 @@ class TermsController < ApplicationController
         @user = current_user
         @course = Course.where("name =?", params[:term][:name]).first
         if(@user)
-            @term = @user.terms.create!({:course_id => @course.id, :name => params[:term][:name], :term_type => params[:term][:term_type]})
+            @term = @user.terms.create!({:course_id => @course.id, :name => params[:term][:name], :term_type => params[:term][:term_type], :date => params[:term][:date], :time_start => params[:term][:time_start], :time_end => params[:term][:time_end], :limit => params[:term][:limit]})
             @term_to_course = @course.terms<<@term
         end
         render json: @term, status: :created, location: @term
