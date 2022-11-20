@@ -21,5 +21,4 @@ Rails.application.routes.draw do
       sessions: 'sessions',
       registrations: 'registrations'
     }
-    root "views#application"
 end
