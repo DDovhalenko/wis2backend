@@ -84,5 +84,4 @@ test:
 production:
   <<: *default
   database: wis2backend_production
-  username: wis2backend
-  password: <%= ENV["WIS2BACKEND_DATABASE_PASSWORD"] %>
+  uri: ENV['DATABASE_URL']
