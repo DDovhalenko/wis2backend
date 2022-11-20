@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :course_registrations
   resources :terms
   resources :term_registrations
+  resources :rooms
+  resources :room_registrations
   devise_scope :user do
     put 'update', to: 'registrations#update'
     put 'passupdate', to: 'registrations#update_password'

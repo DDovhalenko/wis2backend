@@ -114,6 +114,8 @@ GEM
     erubi (1.11.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -181,6 +183,11 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -257,12 +264,14 @@ DEPENDENCIES
   devise
   devise-jwt
   dotenv-rails
+  heroku-deflater
   importmap-rails
   jbuilder
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4)
+  rails_12factor
   selenium-webdriver
   sprockets-rails
   stimulus-rails
