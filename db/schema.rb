@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
     t.text "description"
     t.string "course_type"
     t.float "price"
+    t.integer "limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_courses_on_user_id"
@@ -57,6 +58,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
     t.bigint "course_id"
     t.string "name"
     t.string "term_type"
+    t.date "date"
+    t.time "time_start"
+    t.time "time_end"
+    t.integer "limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_terms_on_course_id"
