@@ -28,7 +28,7 @@ class TermsController < ApplicationController
                 @term_to_room.save
                 render json: @term, status: :created, location: @term
             else 
-                render json: status: :not_modified
+                #render json: @term, status: :not_modified
             end
         end    
     end
