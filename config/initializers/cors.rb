@@ -10,12 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       end
 
     allow do
-        origins "https://wis2.vercel.app"
-        resource '*',
-        headers: ["Authorization"],
-        expose: ["Authorization"],
-        methods: [:get, :post, :put, :patch, :delete, :options, :head],
-        max_age: 600,
-        credentials: true
+        origins "https://wis2.herokuapp.com"
+        resource "*", headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head],
     end
 end
