@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_20_111755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
     t.text "description"
     t.string "course_type"
     t.float "price"
+    t.integer "limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_courses_on_user_id"
@@ -40,6 +41,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "room_registrations", force: :cascade do |t|
+    t.bigint "term_id"
+    t.bigint "room_id"
+    t.date "date"
+    t.time "time_start"
+    t.time "time_end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_room_registrations_on_room_id"
+    t.index ["term_id"], name: "index_room_registrations_on_term_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.string "limit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "term_registrations", force: :cascade do |t|
@@ -57,6 +77,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_153138) do
     t.bigint "course_id"
     t.string "name"
     t.string "term_type"
+    t.date "date"
+    t.time "time_start"
+    t.time "time_end"
+    t.integer "limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_terms_on_course_id"

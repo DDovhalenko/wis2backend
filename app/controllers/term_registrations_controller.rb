@@ -1,4 +1,7 @@
 class TermRegistrationsController < ApplicationController
+    before_action :authenticate_user!
+    before_action :authorize_request
+
     #get /term_registrations
     def index
         @user = current_user

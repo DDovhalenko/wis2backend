@@ -6,7 +6,10 @@ class SessionsController < Devise::SessionsController
     #current_user = @user
     if(@user.valid_password?(params[:user][:password]))
       sign_in(:user, @user)
-      render json:{user: @user}
+      token = JsonWebToken.encode(user_id: @user.id)
+      time = Time.now + 24.hours.to_i
+      render json:{token: token, exp: time.strftime("%m-%d-%Y %H:%M"), user: @user}
+      
     end
 
   end
