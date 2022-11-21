@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     resource.save
     sign_in(resource_name, resource)
-    #token = JsonWebToken.encode(user_id: resource.id)
+    token = JsonWebToken.encode(user_id: resource.id)
       time = Time.now + 24.hours.to_i
       render json:{token: token, exp: time.strftime("%m-%d-%Y %H:%M"), user: @user}
   end
