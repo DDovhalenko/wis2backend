@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :rooms
   resources :room_registrations
   devise_scope :user do
-    put 'update', to: 'registrations#update'
-    put 'passupdate', to: 'registrations#update_password'
+    put 'update', to: 'updates#update_user'
+    put 'passupdate', to: 'updates#update_password'
     end
   devise_for :users, 
     path: '', 
