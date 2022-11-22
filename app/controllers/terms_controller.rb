@@ -4,7 +4,7 @@ class TermsController < ApplicationController
     # GET /terms
     def index
         @terms = Term.all
-        render json: @courses
+        render json: @terms
     end
 
     # POST /terms
