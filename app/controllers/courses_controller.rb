@@ -16,6 +16,23 @@ class CoursesController < ApplicationController
         render json: @course, status: :created, location: @course
     end
 
+    def update_course
+        @course = Course.find(params[:course][:id])
+        if(@course)
+            @course.name = params[:course][:name]
+            @course.full_name = params[:course][:full_name]
+            @course.description = params[:course][:description]
+            @course.course_type = params[:course][:course_type]
+            @course.price = params[:course][:price]
+            @course.limit = params[:course][:limit]
+            @course.save
+            @term=Term.where("course_id = ?", @course.id).update_all(name:@course.name)   
+            render json: @course
+        else
+            render json: {status: :not_modified}
+        end
+    end
+
     private 
     # Only allow a trusted parameter "white list" through.
     def course_params

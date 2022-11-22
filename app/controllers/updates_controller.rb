@@ -20,4 +20,11 @@ def update_user
     @user.save
     render json: @user
   end
+
+  def update_user_role
+    @user = current_user
+    @user.role = params[:user][:role]
+    @user.save
+    render json: @user
+  end
 end
