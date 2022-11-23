@@ -16,6 +16,15 @@ class RoomsController < ApplicationController
         render json: @room, status: :created, location: @room
     end
 
+    def destroy
+        @room_registrations = RoomRegistration.where("room_id = ?", params[:id]).all
+        @room_registrations.map{|r| Term.find([r.term_id]).first.destroy}
+        @room = Room.find(params[:id])
+        if(@room.destroy!)
+            render json: {status: :ok}
+        end
+    end
+
     private 
     # Only allow a trusted parameter "white list" through.
     def room_params

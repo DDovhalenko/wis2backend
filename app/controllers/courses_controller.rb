@@ -33,6 +33,13 @@ class CoursesController < ApplicationController
         end
     end
 
+    def destroy
+        @course = Course.find(params[:id])
+        if(@course.destroy!)
+            render json: {status: :ok}
+        end
+    end
+
     private 
     # Only allow a trusted parameter "white list" through.
     def course_params

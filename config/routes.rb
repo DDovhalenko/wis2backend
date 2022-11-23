@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   resources :courses
   put '/courses', to: 'courses#update_course'
   resources :course_registrations
+  post '/delete_course_registrations', to: 'course_registrations#destroy'
   resources :terms
   post '/showterms', to: 'terms#show_terms'
   resources :term_registrations
+  post '/delete_term_registrations', to: 'term_registrations#destroy'
   resources :rooms
   resources :room_registrations
   devise_scope :user do

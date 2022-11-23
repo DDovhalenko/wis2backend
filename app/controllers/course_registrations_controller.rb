@@ -11,12 +11,20 @@ class CourseRegistrationsController < ApplicationController
     #post /course_registrations
     def create
         @user = current_user
-        @course  = Course.where("name = ?", params[:course][:name]).first
+        @course  = Course.find(params[:course][:id])
         begin
             @registration = @course.users<<@user
             render json:{message: "creating registration"}
         rescue ActiveRecord::RecordNotUnique
             render json:{status:"notUnique"}
+        end
+    end
+
+    def destroy
+        @user = current_user
+        @course_registration = CourseRegistration.where(["user_id = ? and course_id = ?", @user.id, params[:course][:id]]).first
+        if(@course_registration.destroy!)
+            render json: {status: :ok}
         end
     end
 end
