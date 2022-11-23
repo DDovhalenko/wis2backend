@@ -1,9 +1,8 @@
 class TermsController < ApplicationController
     before_action :authorize_request
 
-    # GET /terms
-    def index
-        @terms = Term.all
+    def show_terms
+        @terms = Term.where("course_id = ?",params[:course][:id])
         render json: @terms
     end
 

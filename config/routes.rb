@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   put '/courses', to: 'courses#update_course'
   resources :course_registrations
   resources :terms
+  post '/showterms', to: 'terms#show_terms'
   resources :term_registrations
   resources :rooms
   resources :room_registrations
