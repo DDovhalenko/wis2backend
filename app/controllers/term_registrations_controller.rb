@@ -1,5 +1,4 @@
 class TermRegistrationsController < ApplicationController
-    before_action :authenticate_user!
     before_action :authorize_request
 
     #get /term_registrations
@@ -12,12 +11,25 @@ class TermRegistrationsController < ApplicationController
     #post /term_registrations
     def create
         @user = current_user
-        @term  = Term.where(["name = ? and term_type = ?", params[:term][:name], params[:term][:term_type]]).first
-        begin
-            @registration = @term.users<<@user
-            render json:{message: "creating registration"}
-        rescue ActiveRecord::RecordNotUnique
-            render json:{status:"notUnique"}
+        @term  = Term.find(params[:term][:id])
+        @count = TermRegistration.where("term_id = ?",@term.id).all.size
+        if(@count < @term.limit)
+            begin
+                @registration = @term.users<<@user
+                render json:{message: "creating registration"}
+            rescue ActiveRecord::RecordNotUnique
+                render json:{status:"notUnique"}
+            end
+        else
+            render json: {message:"limit error"}
+        end    
+    end
+
+    def destroy
+        @user = current_user
+        @term_registration = TermRegistration.where(["user_id = ? and term_id = ?", @user.id, params[:term][:id]]).first
+        if(@term_registration.destroy!)
+            render json: {status: :ok}
         end
     end
 end

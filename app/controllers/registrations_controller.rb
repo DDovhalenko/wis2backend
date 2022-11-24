@@ -11,35 +11,23 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    build_resource(sign_up_params)
-    resource.save
-    sign_in(resource_name, resource)
+    @user = User.create!(sign_up_params)
+    @user.save
+    current_user = @user
     token = JsonWebToken.encode(user_id: resource.id)
       time = Time.now + 24.hours.to_i
       render json:{token: token, exp: time.strftime("%m-%d-%Y %H:%M"), user: @user}
   end
 
-  def update
-    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-    prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
-    resource_updated =  resource.update_without_password(account_update_params)
-    render json: resource
-  end
-
-  def update_password
-    @user = current_user
-    if @user.update(user_params)
-      bypass_sign_in(@user)
-      render json: @user
-    else
-      render json: "edit"
-    end
-  end
 
   private
 
   def user_params
     params.require(:user).permit(:password)
+  end
+
+  def user_params
+    params.require(:user).permit(:name,:surname,:email,:password)
   end
   
 end

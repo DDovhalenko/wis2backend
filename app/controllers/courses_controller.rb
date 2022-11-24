@@ -1,11 +1,10 @@
 class CoursesController < ApplicationController
-    before_action :authenticate_user!
     before_action :authorize_request
 
     # GET /courses
     def index
-        @courses = Course.all
-        render json: @courses
+        @counts = Course.includes(:course_registrations).map { |course| { course: course, count: course.course_registrations.size }}
+        render json: @counts
     end
 
     # POST /courses
@@ -15,6 +14,30 @@ class CoursesController < ApplicationController
             @course = @user.courses.create!(course_params)
         end
         render json: @course, status: :created, location: @course
+    end
+
+    def update_course
+        @course = Course.find(params[:course][:id])
+        if(@course)
+            @course.name = params[:course][:name]
+            @course.full_name = params[:course][:full_name]
+            @course.description = params[:course][:description]
+            @course.course_type = params[:course][:course_type]
+            @course.price = params[:course][:price]
+            @course.limit = params[:course][:limit]
+            @course.save
+            @term=Term.where("course_id = ?", @course.id).update_all(name:@course.name)   
+            render json: @course
+        else
+            render json: {status: :not_modified}
+        end
+    end
+
+    def destroy
+        @course = Course.find(params[:id])
+        if(@course.destroy!)
+            render json: {status: :ok}
+        end
     end
 
     private 

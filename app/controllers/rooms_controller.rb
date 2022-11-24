@@ -1,5 +1,4 @@
 class RoomsController < ApplicationController
-    before_action :authenticate_user!
     before_action :authorize_request
 
     # GET /rooms
@@ -15,6 +14,15 @@ class RoomsController < ApplicationController
             @room = Room.create!(room_params)
         end
         render json: @room, status: :created, location: @room
+    end
+
+    def destroy
+        @room_registrations = RoomRegistration.where("room_id = ?", params[:id]).all
+        @room_registrations.map{|r| Term.find([r.term_id]).first.destroy}
+        @room = Room.find(params[:id])
+        if(@room.destroy!)
+            render json: {status: :ok}
+        end
     end
 
     private 
