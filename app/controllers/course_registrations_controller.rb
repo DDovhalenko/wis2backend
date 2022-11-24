@@ -12,11 +12,16 @@ class CourseRegistrationsController < ApplicationController
     def create
         @user = current_user
         @course  = Course.find(params[:course][:id])
-        begin
-            @registration = @course.users<<@user
-            render json:{message: "creating registration"}
-        rescue ActiveRecord::RecordNotUnique
-            render json:{status:"notUnique"}
+        @count = CourseRegistration.where("course_id = ?",@course.id).all.size
+        if(@count < @course.limit)
+            begin
+                @registration = @course.users<<@user
+                render json:{message: "creating registration"}
+            rescue ActiveRecord::RecordNotUnique
+                render json:{status:"notUnique"}
+            end
+        else
+            render json: {message:"limit error"}
         end
     end
 

@@ -2,8 +2,9 @@ class TermsController < ApplicationController
     before_action :authorize_request
 
     def show_terms
-        @terms = Term.where("course_id = ?",params[:course][:id])
-        render json: @terms
+        @terms = Term.where("course_id = ?",params[:course][:id]).all
+        @counts = @terms.includes(:term_registrations).map { |term| { term: term, count: term.term_registrations.size }}
+        render json: @counts
     end
 
     # POST /terms

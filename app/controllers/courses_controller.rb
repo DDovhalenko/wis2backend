@@ -3,8 +3,8 @@ class CoursesController < ApplicationController
 
     # GET /courses
     def index
-        @courses = Course.all
-        render json: @courses
+        @counts = Course.includes(:course_registrations).map { |course| { course: course, count: course.course_registrations.size }}
+        render json: @counts
     end
 
     # POST /courses

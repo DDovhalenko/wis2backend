@@ -12,12 +12,17 @@ class TermRegistrationsController < ApplicationController
     def create
         @user = current_user
         @term  = Term.find(params[:term][:id])
-        begin
-            @registration = @term.users<<@user
-            render json:{message: "creating registration"}
-        rescue ActiveRecord::RecordNotUnique
-            render json:{status:"notUnique"}
-        end
+        @count = TermRegistration.where("term_id = ?",@term.id).all.size
+        if(@count < @term.limit)
+            begin
+                @registration = @term.users<<@user
+                render json:{message: "creating registration"}
+            rescue ActiveRecord::RecordNotUnique
+                render json:{status:"notUnique"}
+            end
+        else
+            render json: {message:"limit error"}
+        end    
     end
 
     def destroy
