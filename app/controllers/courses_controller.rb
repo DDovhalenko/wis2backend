@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
 
     # GET /courses
     def index
-        @counts = Course.includes(:course_registrations).map { |course| { course: course,  }}
+        @counts = Course.includes(:course_registrations).map { |course| { course: course, count: course.course_registrations.size }}
         render json: @counts
     end
 
@@ -27,7 +27,6 @@ class CoursesController < ApplicationController
             @course.limit = params[:course][:limit]
             @course.save
             @term=Term.where("course_id = ?", @course.id).update_all(name:@course.name)
-            @course.count = course.course_registrations.size
             render json: @course
         else
             render json: {status: :not_modified}
