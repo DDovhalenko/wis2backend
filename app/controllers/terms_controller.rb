@@ -3,7 +3,9 @@ class TermsController < ApplicationController
 
     def show_terms
         @terms = Term.where("course_id = ?",params[:course][:id]).all
-        @counts = @terms.includes(:term_registrations).map { |term| { term: term, count: term.term_registrations.size }}
+        @counts = @terms.includes(:term_registrations).map { |term| { course_id:term.course_id, date:term.date,
+            id:term.id, limit:term.limit, name:term.name, term_type:term.term_type, time_end:term.time_end,
+            time_start:term.time_start,user_id:term.user_id, count: term.term_registrations.size }}
         render json: @counts
     end
 
