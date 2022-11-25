@@ -33,3 +33,4 @@
 /config/database.yml
 config/database.yml
 /db/schema.rb
+.rake_tasks~

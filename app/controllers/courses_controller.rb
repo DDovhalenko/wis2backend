@@ -29,7 +29,7 @@ class CoursesController < ApplicationController
             @course.price = params[:course][:price]
             @course.limit = params[:course][:limit]
             @course.save
-            @term=Term.where("course_id = ?", @course.id).update_all(name:@course.name)   
+            @term=Term.where("course_id = ?", @course.id).update_all(name:@course.name)
             render json: @course
         else
             render json: {status: :not_modified}
