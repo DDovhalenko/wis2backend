@@ -22,7 +22,7 @@ def update_user
   end
 
   def update_user_role
-    @user = current_user
+    @user = User.find(params[:user][:id])
     @user.role = params[:user][:role]
     @user.save
     render json: @user
