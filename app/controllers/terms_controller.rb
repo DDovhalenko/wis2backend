@@ -3,9 +3,11 @@ class TermsController < ApplicationController
 
     def show_terms
         @terms = Term.where("course_id = ?",params[:course][:id]).all
+        @rooms = Room.joins(:room_registrations)
         @counts = @terms.includes(:term_registrations).map { |term| { course_id:term.course_id, date:term.date,
             id:term.id, limit:term.limit, name:term.name, term_type:term.term_type, time_end:term.time_end,
-            time_start:term.time_start,user_id:term.user_id, count: term.term_registrations.size }}
+            time_start:term.time_start,user_id:term.user_id, count: term.term_registrations.size, 
+            room:@rooms.where("term_id = ?",term.id).first.name}}
         render json: @counts
     end
 
@@ -29,7 +31,7 @@ class TermsController < ApplicationController
                 @term_to_room.save
                 render json: @term, status: :created, location: @term
             else 
-                render json: {status: :not_modified}
+                render json: {},status: :conflict
             end
         end    
     end

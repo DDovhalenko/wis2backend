@@ -21,7 +21,7 @@ class CourseRegistrationsController < ApplicationController
                 render json:{status:"notUnique"}
             end
         else
-            render json: {message:"limit error"}
+            render json: {},status: :conflict
         end
     end
 
