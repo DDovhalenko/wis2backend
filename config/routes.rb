@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/member-data', to: 'members#show'
   get '/users', to: 'users#show'
+  get '/showcourses',to: 'public_courses#show'
   resources :courses
   put '/courses', to: 'courses#update_course'
   resources :course_registrations
