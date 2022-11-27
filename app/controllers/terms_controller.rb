@@ -16,7 +16,7 @@ class TermsController < ApplicationController
         @user = current_user
         @room = Room.find(params[:room][:id])
         @course = Course.find(params[:course][:id])
-        @room_registrations = RoomRegistration.where(["date = ?",params[:term][:date]]).all
+        @room_registrations = RoomRegistration.where(["date = ? and room_id = ?",params[:term][:date],params[:room][:id]]).all
         @room_registration_same_time = @room_registrations.where(["(time_start < ? and time_end > ?) or (time_start < ? and time_end > ?)",
             params[:term][:time_start], params[:term][:time_start],params[:term][:time_end],params[:term][:time_start]]).first
         if(@user)
